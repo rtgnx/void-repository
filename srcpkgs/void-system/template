@@ -1,0 +1,29 @@
+# Template file for 'base-system'
+pkgname=void-system
+version=0.1.0
+revision=2
+build_style=meta
+short_desc="Void Linux extended base system packages"
+maintainer="Adrian Cybulski <adrian@cybulski.cc>"
+license="Public Domain"
+homepage="https://www.voidlinux.org"
+
+depends="
+ base-files>=0.77 ncurses coreutils findutils diffutils libgcc
+ dash bash grep gzip file sed gawk less util-linux which tar man-pages
+ mdocml>=1.13.3 shadow e2fsprogs btrfs-progs xfsprogs f2fs-tools dosfstools
+ procps-ng tzdata pciutils usbutils iana-etc openssh dhcpcd
+ kbd iproute2 iputils iw wpa_supplicant xbps nvi sudo wifi-firmware
+ void-artwork traceroute ethtool kmod acpid eudev runit-void removed-packages
+ socklog-void vsv cronie chrony rsync restic stow starship yubikey-manager age htop
+ btop neofetch void-docs void-docs-browse void-release-keys void-repo-nonfree openssh-sk-helper
+ exa lm_sensors stress-ng zrepl net-tools acl-progs squashfs-tools gnupg gnupg2-scdaemon nfs-utils"
+
+case "$XBPS_TARGET_MACHINE" in
+	*-musl) depends+=" musl";;
+	*) depends+=" glibc-locales";;
+esac
+
+case "$XBPS_TARGET_MACHINE" in
+	i686*|x86_64*|ppc*) depends+=" linux";;
+esac

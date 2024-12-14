@@ -1,0 +1,34 @@
+# Template file for 'caddy-tailscale'
+pkgname=caddy-tailscale
+version=2.8.4
+revision=4
+hostmakedepends="go xcaddy git"
+maintainer="Adrian Cybulski <adrian@cybulski.cc>"
+short_desc="Fast, cross-platform HTTP/2 web server with automatic HTTPS"
+license="Apache-2.0"
+homepage="https://caddyserver.com"
+changelog="https://github.com/caddyserver/caddy/releases"
+system_accounts="caddy"
+caddy_homedir="/var/lib/caddy"
+caddy_descr="caddy daemon with tailscale support"
+conf_files="/etc/caddy/Caddyfile"
+
+
+make_dirs="
+	/etc/caddy 0700 caddy caddy
+	/var/lib/caddy 0700 caddy caddy"
+
+do_build() {
+	xcaddy build v$version --with github.com/tailscale/caddy-tailscale
+}
+
+do_install() {
+	vbin caddy
+}
+
+post_install() {
+	vsv caddy
+
+	printf "\n" > Caddyfile
+	vinstall Caddyfile 600 etc/caddy
+}

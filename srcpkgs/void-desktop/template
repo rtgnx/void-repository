@@ -1,0 +1,51 @@
+# Template file for 'void-desktop'
+pkgname=void-desktop
+version=0.1.0
+revision=9
+build_style=meta
+short_desc="Void Linux extended base system packages"
+maintainer="Adrian Cybulski <adrian@cybulski.cc>"
+license="Public Domain"
+homepage="https://www.voidlinux.org"
+gpu_pkgs="
+  mesa mesa-vaapi mesa-vdpau mesa-vulkan-radeon mesa-ati-dri mesa-demos mesa-dri
+  radeon-profile radeon-profile-daemon radeontop "
+
+audio_pkgs="
+  pipewire wireplumber wireplumber-elogind
+  alsa-oss alsa-utils alsa-tools alsa-pipewire alsa-plugins
+  alsa-plugins-jack alsa-plugins-ffmpeg alsa-plugins-pulseaudio "
+
+video_pkgs=" ffmpeg libavcodec mplayer mpv "
+
+system_pkgs=" polkit polkit-elogind dbus dbus-elogind elogind flatpak"
+
+wm_pkgs="
+  hyprland hyprland-devel xdg-desktop-portal-hyprland
+  hyprpaper hyprlock hypridle hyprland-protocols hyprpicker
+  wofi swaybg SwayNotificationCenter Waybar conky pywal wayvnc"
+
+term_pkgs=" kitty wezterm wezterm-terminfo "
+
+fonts_pkgs=" nerd-fonts nerd-fonts-ttf noto-fonts-ttf "
+
+themes_pkgs=" papirus-icon-theme paper-gtk-theme "
+
+apps_pkgs=" firefox sxiv Thunar freecad openscad godot obs zathura zathura-pdf-poppler zathura-ps"
+editor_pkgs=" neovim neovim-remote nvimpager python3-neovim"
+dev_tools="docker python3-devel go rustup cargo"
+editing_pkgs="texlive2024-bin texlive-most texlive-science texlive-latexmk texlive-fontsextra texlive-BibTeX pandoc"
+
+
+depends="
+  $system_pkgs $audio_pkgs $gpu_pkgs $wm_pkgs $term_pkgs $fonts_pkgs $themes_pkgs
+  $apps_pkgs $video_pkgs $devtools $editor_pkgs $ediing_pkgs"
+
+case "$XBPS_TARGET_MACHINE" in
+	*-musl) depends+=" musl";;
+	*) depends+=" glibc-locales";;
+esac
+
+case "$XBPS_TARGET_MACHINE" in
+	i686*|x86_64*|ppc*) depends+=" linux";;
+esac

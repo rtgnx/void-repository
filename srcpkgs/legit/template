@@ -1,0 +1,17 @@
+# Template file for 'legit'
+pkgname=legit
+version=0.2.4
+revision=1
+build_style=go
+short_desc="web frontend for git, written in go"
+go_import_path="git.icyphox.sh/legit"
+maintainer="Adrian Cybulski <adrian@cybulski.cc>"
+license="MIT"
+homepage="https://git.icyphox.sh"
+depends="git"
+distfiles="https://git.icyphox.sh/legit/archive/v0.2.4.tar.gz"
+checksum=103b9f3e23855bd226f72e3f6eebd6648e08642bbee915f462ecedcae15eabee
+
+post_install() {
+	vlicense license
+}
